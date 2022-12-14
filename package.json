@@ -1,0 +1,51 @@
+{
+  "name": "app",
+  "private": "true",
+  "dependencies": {
+    "@hotwired/stimulus": "^3.1.0",
+    "@hotwired/turbo-rails": "^7.2.0",
+    "@popperjs/core": "^2.11.6",
+    "@rails/actioncable": "^7.0.4",
+    "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.10.2",
+    "esbuild": "^0.15.10",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
+    "sass": "^1.55.0"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets || yarn failure:js",
+    "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "failure:js": "rm ./app/assets/builds/application.js && rm ./app/assets/builds/application.js.map && echo -ne '\\007\\007\\007'"
+  },
+  "jest": {
+    "roots": [
+      "spec/javascript"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules/",
+      "config/webpack/test.js",
+      "vendor/bundle/ruby"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "app/javascript",
+      "spec/javascript"
+    ],
+    "collectCoverage": true,
+    "coverageReporters": [
+      "text",
+      "html"
+    ],
+    "coverageDirectory": "coveragejs",
+    "testEnvironment": "jsdom"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.2",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.20.2",
+    "babel-jest": "^29.3.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "istanbul-reports": "^3.1.5"
+  }
+}
